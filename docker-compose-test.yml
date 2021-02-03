@@ -1,10 +1,11 @@
 version: "3.4"
 services:
     keyword:
-            #command: --model get-help-v2.pb --model-dir /downloads --debug --host mqtt
         command: --model hey-mycroft-2.pb --model-dir /rhasspywake_precise_hermes/models --debug --host mqtt
-            --port 12183 --site-id soundcare --engine precise-engine/precise-engine
-        image: "precise-wake:latest"
+                   --port 12183 --site-id soundcare
+                   #command: --model get-help-v2.pb --model-dir /downloads --debug --host mqtt
+                   #--port 12183 --site-id soundcare 
+        image: "precise-wake-source:latest"
         tty: true
         volumes:
             - ./downloads:/downloads
