@@ -1,0 +1,30 @@
+version: "3.4"
+services:
+    keyword:
+        command: --model get-help-v2.pb --model-dir /downloads --debug --host mqtt 
+            --port 12183 --site-id soundcare --engine /rhasspy-wake-precise-hermes/precise.py
+        image: "precise-wake:latest"
+        tty: true
+        volumes:
+            - ./downloads:/downloads
+        depends_on:
+            - mqtt
+    mqtt:
+        command: -p 12183
+        entrypoint: mosquitto
+        image: eclipse-mosquitto
+        ports:
+        - 12183:12183
+        tty: true
+    soundflux-recording-app:
+        environment:
+            - MIC_CARD_INDEX=0
+            - MIC_NUMBER_OF_CHANNELS=2
+            - MIC_CHUNK=1225
+            - MIC_RATE=44100
+            - DEVICE_IDENTIFIER=test
+        privileged: true
+        image: registry.gitlab.com/soundflux/edge/soundflux-edge-recording
+        command: ["python3", "generator.py", "--action", "capture_live_feed"]
+        depends_on:
+            - mqtt
