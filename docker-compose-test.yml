@@ -2,7 +2,7 @@ version: "3.4"
 services:
     keyword:
         command: --model get-help-v2.pb --model-dir /downloads --debug --host mqtt 
-            --port 12183 --site-id soundcare --engine /rhasspy-wake-precise-hermes/precise.py
+            --port 12183 --site-id soundcare --engine precise-engine/precise-engine
         image: "precise-wake:latest"
         tty: true
         volumes:
